@@ -28,11 +28,14 @@ while(True):
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-        username, conf = recognizer.predict(gray[y: y + h, x: x + w])
-        if(conf > 50):
-            username = "Unknown"
-    
-        cv2.putText(frame, str(username), (10, 500), font, 4, (0, 0, 255), 2, cv2.LINE_AA)
+        id, conf = recognizer.predict(gray[y: y + h, x: x + w])
+        username = 'Unknown'
+
+        if(conf < 50):
+            if(id is 1):
+                username = 'David'
+
+        cv2.putText(frame, username, (10, 50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
     # Display the resulting frame
     cv2.imshow('Web camera', frame)

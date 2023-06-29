@@ -9,6 +9,7 @@ if not os.path.exists(users_dir):
     os.mkdir(users_dir)
 
 username = input('Enter your username: ')
+id = input('Enter id: ')
 
 user_path = os.path.join(users_dir, username)
 
@@ -28,9 +29,9 @@ while(True):
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
         
-        #saving the captured face in the dataset folder
-        path = user_path + '/' + str(uuid.uuid4()) +'.'+ str(sample_num) + ".jpg"
-        print(path)
+        # saving the captured face in the dataset folder
+        path = user_path + '/' + f'Id_{id}.Sample_{sample_num}.jpg'
+        print('Fiel saved as: ', path)
         cv2.imwrite(path, gray[y: y + h, x: x + w])
 
         #incrementing sample number 
@@ -38,7 +39,7 @@ while(True):
 
     cv2.imshow('Web Camera', frame)
 
-    #wait for 100 miliseconds 
+    # wait for 100 miliseconds 
     if cv2.waitKey(200) & 0xFF == ord('q'):
         break
 

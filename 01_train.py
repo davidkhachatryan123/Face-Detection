@@ -9,7 +9,7 @@ users_dir = 'users'
 
 def get_images_and_labels(path):
     face_samples = []
-    usernames = []
+    ids = []
 
     for user_dir in os.listdir(path):
         user_full_dir = os.path.join(path, user_dir)
@@ -22,11 +22,11 @@ def get_images_and_labels(path):
 
             for (x, y, w, h) in faces:
                 face_samples.append(image_np[y: y + h, x: x + w])
-                usernames.append(user_dir)
+                ids.append(int(user_image.split(".")[0].replace('Id_', '')))
     
-    return face_samples, usernames
+    return face_samples, ids
 
-faces, usernames = get_images_and_labels(users_dir)
+faces, ids = get_images_and_labels(users_dir)
 
-recognizer.train(faces, usernames)
+recognizer.train(faces, np.array(ids))
 recognizer.save('trained.yml')
