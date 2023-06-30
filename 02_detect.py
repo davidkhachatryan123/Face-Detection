@@ -1,4 +1,4 @@
-import cv2
+import cv2, json
 import numpy as np
 
 # define a video capture object
@@ -13,6 +13,14 @@ recognizer.read('trained.yml')
 
 # Load the cascade
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+def readJson(path):
+    with open(path, 'r') as file:
+        jsonObject = json.load(file)
+        file.close()
+        return jsonObject
+
+users = readJson('users.json')
 
 while(True):
     # Capture the video frame by frame
@@ -32,8 +40,7 @@ while(True):
         username = 'Unknown'
 
         if(conf < 50):
-            if(id is 1):
-                username = 'David'
+            username = users[str(id)]
 
         cv2.putText(frame, username, (10, 50), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
